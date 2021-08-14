@@ -1,0 +1,71 @@
+.form-element {
+  position: relative;
+  text-align: left;
+
+  &__text {
+    margin-bottom: px2rem(6);
+  }
+
+  &__input {
+    width: 100%;
+    padding: px2rem(18) px2rem(12) px2rem(14);
+    font-size: px2rem(14);
+    line-height: 1.428;
+    background-color: #fff;
+    outline: none;
+    border: px2rem(3) solid transparent;
+    border-radius: px2rem(4);
+    transition: border-color 0.5s;
+
+    @include mq-medium {
+      padding: px2rem(6) px2rem(10) px2rem(6);
+    }
+
+    &--textarea {
+      resize: none;
+      height: px2rem(150);
+
+      @include mq-medium {
+        height: px2rem(80);
+      }
+    }
+  }
+
+  &__error {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: calc(100% + 6px);
+    opacity: 0;
+    background-color: #ffffff;
+    color: $hover-text-color;
+    width: 100%;
+    padding: px2rem(6) px2rem(8);
+    border-radius: px2rem(4);
+    box-shadow: 0 0 1px #000;
+    transition: opacity 0.2s;
+
+    &--active {
+      opacity: 1;
+    }
+
+    &::before {
+      box-sizing: border-box;
+      content: "";
+      position: absolute;
+      top: -12px;
+      left: 10%;
+      width: 3px;
+      height: 3px;
+      border: 6px solid transparent;
+      border-bottom-color: white;
+      background-color: transparent;
+    }
+  }
+
+  &--active &__input,
+  &:hover &__input {
+    border: px2rem(3) solid $hover-text-color;
+    outline: none;
+  }
+}
