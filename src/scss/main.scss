@@ -1,11 +1,5 @@
-$bg-color: peachpuff;
-$main-color: #888;
-$main-fsz: 18px;
-
-body {
-  margin: 0;
-  padding: 0;
-  background-color: $bg-color;
-  font-size: $main-fsz;
-  color: $main-color;
-}
+@import '../../node_modules/normalize.css/normalize.css';
+@import './layout/base';
+@import './blocks/map';
+@import './blocks/button';
+@import './blocks/balloon';

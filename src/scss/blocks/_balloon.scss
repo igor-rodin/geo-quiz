@@ -1,0 +1,42 @@
+.balloon {
+  background-color: #ffffff;
+  width: 310px;
+  padding-top: 30px;
+  padding-left: 17px;
+  padding-right: 26px;
+  padding-bottom: 20px;
+  font-size: 14px;
+}
+
+.balloon__title {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.balloon__row {
+  margin-bottom: 10px;
+
+  &--btn {
+    margin-top: 9px;
+    margin-bottom: 0;
+  }
+}
+
+.balloon__input {
+  outline: none;
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #CFCFCF;
+  border-radius: 3px;
+
+  &:focus, &:hover {
+    border-color: #1371C8;
+  }
+
+  &--textarea {
+    resize: none;
+    padding-top: 7px;
+    padding-bottom: 0;
+    height: 98px;
+  }
+}

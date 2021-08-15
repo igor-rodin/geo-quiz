@@ -1,42 +1,12 @@
+$btn-color: #ffffff;
 .button {
-  display: inline-block;
-  padding: px2rem(21) px2rem(41);
+  padding: 10px 16px;
   font-weight: bold;
-  line-height: 1.125;
-  text-transform: uppercase;
-  border-radius: px2rem(100);
-  background-color: $btn-bg-color;
+  border-radius: 3px;
+  background-color: #FF8663;
   color: $btn-color;
-  transition: background-color 0.5s;
-
-  @include mq-small {
-    font-size: px2rem(16);
-    line-height: 1.125;
-    padding: px2rem(21) px2rem(41);
-  }
 
   &:hover {
     cursor: pointer;
-    background-color: $btn-hover-bg-color;
-  }
-
-  &--theme-transparent {
-    text-transform: capitalize;
-    background-color: transparent;
-    font-weight: normal;
-    padding-left: px2rem(15);
-
-    @include mq-medium{
-      padding-right: 0;
-    }
-
-    @include mq-small {
-      padding-left: px2rem(26);
-    }
-
-    &:hover {
-      background-color: transparent;
-      color: $hover-text-color;
-    }
   }
 }

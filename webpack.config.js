@@ -10,12 +10,12 @@ module.exports = {
   entry: './index.js',
   output: {
     clean: true,
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'doc'),
     filename: isDevMode ? `js/[name].js` : `js/[name]-[contenthash:7].js`,
-    assetModuleFileName: isDevMode ? `images/[name][ext]` : `images/[name]-[contenthash:7][ext][query]`,
+    assetModuleFilename: isDevMode ? `images/[name][ext]` : `images/[name]-[contenthash:7][ext][query]`,
   },
   devServer: {
-    contentBase: path.resolve(__dirname, './dist'),
+    contentBase: path.resolve(__dirname, './doc'),
     index: 'index.html',
     hot: true,
     port: 8000

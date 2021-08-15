@@ -1,2 +1,2 @@
 import './scss/main.scss'
-console.log("Hello geofeedback!!");
+import './js/map'

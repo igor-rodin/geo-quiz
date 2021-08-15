@@ -1,25 +1,6 @@
-$main-color: #292929;
-$second-color: #666666;
-$hover-text-color:#E01F3D;
-$bg-color-welcome: #F5F5F5;
-$bg-color-products: #F8FAF9;
-$bg-review-card: #F8FAF9;
-$bg-color-video:#F8FAF9;
-$bg-form-color: #181818;
-$bg-overlay: #333537;
-$input-text--color: #000;
-$form-text-color: #fff;
-$btn-bg-color: #E01F3D;
-$btn-hover-bg-color: #CA1B36;
-$btn-color: #fff;
-$icon-color: #B3B3B3;
-$icon-hover-color: #000000;
-$main-font: "Play", sans-serif;
-$welcome-font: 'Alegreya Sans', sans-serif;
-$secondary-font: 'Alegreya Sans', sans-serif;
-$base-font-size: 16;
-$medium-size: 768px;
-$small-size: 480px;
+$main-color: #000000;
+$main-font: "Arial", sans-serif;
+$main-font-size: 16px;
 
 :root {
   box-sizing: border-box;
@@ -47,27 +28,20 @@ body {
 }
 
 html {
-  font-size: #{$base-font-size}px;
-
-  @include mq-small {
-    font-size: 2vmax;
-  }
+  font-size: $main-font-size;
 }
 
 body {
-  font-family: "Play", sans-serif;
+  font-family: $main-font;
+  position: relative;
   color: $main-color;
   font-weight: normal;
   font-style: normal;
-  line-height: 1.19;
+  line-height: 1.143;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
 
 ul {
   list-style: none;
@@ -83,39 +57,15 @@ img {
 button {
   color: inherit;
   border: none;
+  outline: none;
   background: transparent;
 }
 
 .wrapper {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-}
-
-
-.container {
-  width: 98%;
-  max-width: px2rem(940);
-
-  @include mq-medium {
-    max-width: px2rem(776);
-  }
-
-  @include mq-small {
-    max-width: px2rem(480);
-  }
-
-  margin: 0 auto;
-
+  // position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 100%;
-}
-
-.main-content {
-  height: 100%;
-  transition: transform 0.5s;
-  will-change: transform;
+  overflow: hidden;
+  min-width: 100%;
+  height: 100vh;
 }
