@@ -3,19 +3,18 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const isDevMode = process.env.NODE_ENV === 'development';
-console.log("IS_DEV_MODE", isDevMode);
 
 module.exports = {
   context: path.resolve(__dirname, './src'),
   entry: './index.js',
   output: {
     clean: true,
-    path: path.resolve(__dirname, 'doc'),
+    path: path.resolve(__dirname, 'docs'),
     filename: isDevMode ? `js/[name].js` : `js/[name]-[contenthash:7].js`,
     assetModuleFilename: isDevMode ? `images/[name][ext]` : `images/[name]-[contenthash:7][ext][query]`,
   },
   devServer: {
-    contentBase: path.resolve(__dirname, './doc'),
+    contentBase: path.resolve(__dirname, './docs'),
     index: 'index.html',
     hot: true,
     port: 8000
