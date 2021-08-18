@@ -1,10 +1,8 @@
 .balloon {
   background-color: #ffffff;
   width: 310px;
-  padding-top: 30px;
   padding-left: 17px;
   padding-right: 26px;
-  padding-bottom: 20px;
   font-size: 14px;
 }
 
@@ -16,7 +14,7 @@
 .balloon__row {
   margin-bottom: 10px;
 
-  &--btn {
+  &--ctr {
     margin-top: 9px;
     margin-bottom: 0;
   }
