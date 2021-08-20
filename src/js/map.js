@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let placeMarkers = [];
     let placeMarkId = 0;
     const storage = localStorage;
-    if (storage.length) {
+    if (storage.length && storage.getItem(STORAGE_NAME)) {
       geoReviews = JSON.parse(storage.getItem(STORAGE_NAME));
       placeMarkers = geoReviews.map(createPlaceMark);
     }
@@ -76,8 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 placeMarkers.push(placeMark);
                 geoReviews.push(geoReview);
                 grClusterer.add(placeMark);
-                storage.setItem(STORAGE_NAME, JSON.stringify(geoReviews,
-                  ['coord', 'placeReviews', 'rawDate', 'reviewFormatedDate', 'userName', 'reviewPlace', 'review']));
+                saveToStorage(storage, STORAGE_NAME, geoReviews);
               };
               myMap.balloon.close();
             });
@@ -107,8 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
               review: balloonData.review,
             };
             updatePlaceMark(placeMark, review);
-            storage.setItem(STORAGE_NAME, JSON.stringify(geoReviews,
-              ['coord', 'placeReviews', 'rawDate', 'reviewFormatedDate', 'userName', 'reviewPlace', 'review']));
+            saveToStorage(storage, STORAGE_NAME, geoReviews);
           };
           placeMark.balloon.close();
         });
@@ -194,5 +192,10 @@ document.addEventListener('DOMContentLoaded', () => {
         name, place, review
       };
     }
+
+    function saveToStorage(storage, key, data) {
+      storage.setItem(key, JSON.stringify(data,
+        ['coord', 'placeReviews', 'rawDate', 'reviewFormatedDate', 'userName', 'reviewPlace', 'review']));
+    };
   }
 });
