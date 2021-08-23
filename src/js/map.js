@@ -1,4 +1,5 @@
 import { balloonTemplate } from "./balloon";
+import { mapBalloonTemplate } from "./balloon";
 import { reviewPlaceTemplate } from "./review";
 import { createPopUpReviews } from "./popUpReviews";
 
@@ -45,42 +46,49 @@ document.addEventListener('DOMContentLoaded', () => {
     grClusterer.add(placeMarkers);
     myMap.geoObjects.add(grClusterer);
 
-    myMap.options.set({
-      balloonContentLayout: MyBalloonContentLayoutClass
-    });
+    myMap.balloon.setData({ balloonHeader: 'ooooo' });
 
     myMap.events.add('click', (event) => {
       if (!myMap.balloon.isOpen()) {
         const coord = event.get('coords');
 
-        myMap.balloon.open(coord, { geoReview: '', })
-          .then(() => {
-            const addReviewBtn = document.querySelector('#geoReviewAdd');
-            addReviewBtn.addEventListener('click', (event) => {
-              const balloonData = getDataFromBallon(document.querySelector('#geoReviewBalloon'));
-              const date = new Date();
-              const formatedDate = getFormatedDate(date);
-              if (balloonData) {
-                const geoReview = {
-                  coord: coord,
-                  placeReviews: [{
-                    rawDate: date,
-                    reviewFormatedDate: formatedDate,
-                    userName: balloonData.name,
-                    reviewPlace: balloonData.place,
-                    review: balloonData.review
-                  }]
-                };
+        let placeAddress;
 
-                const placeMark = createPlaceMark(geoReview);
-                placeMarkers.push(placeMark);
-                geoReviews.push(geoReview);
-                grClusterer.add(placeMark);
-                saveToStorage(storage, STORAGE_NAME, geoReviews);
-              };
-              myMap.balloon.close();
+        ymaps.geocode(coord, { results: 1 }).then(function (res) {
+          placeAddress = res.geoObjects.get(0).properties.get('name');
+          myMap.balloon.open(coord, {
+            geoReview: '', contentHeader: placeAddress,
+            contentBody: mapBalloonTemplate
+          })
+            .then(() => {
+              const addReviewBtn = document.querySelector('#geoReviewAdd');
+              addReviewBtn.addEventListener('click', (event) => {
+                const balloonData = getDataFromBallon(document.querySelector('#geoReviewBalloon'));
+                const date = new Date();
+                const formatedDate = getFormatedDate(date);
+                if (balloonData) {
+                  const geoReview = {
+                    address: placeAddress,
+                    coord: coord,
+                    placeReviews: [{
+                      rawDate: date,
+                      reviewFormatedDate: formatedDate,
+                      userName: balloonData.name,
+                      reviewPlace: balloonData.place,
+                      review: balloonData.review
+                    }]
+                  };
+
+                  const placeMark = createPlaceMark(geoReview);
+                  placeMarkers.push(placeMark);
+                  geoReviews.push(geoReview);
+                  grClusterer.add(placeMark);
+                  saveToStorage(storage, STORAGE_NAME, geoReviews);
+                };
+                myMap.balloon.close();
+              });
             });
-          });
+        })
       }
       else {
         myMap.balloon.close();
@@ -142,13 +150,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const placeMark = new ymaps.Placemark(reviewObject.coord,
         {
           geoReview: reviewObject,
-          balloonContentBody: Array.from(new Set(reviewObject.placeReviews.map(obj => obj.reviewPlace))).join(', '),
         },
         {
           balloonContentLayout: MyBalloonContentLayoutClass,
         });
-
-      updateIcon(placeMark, reviewObject.placeReviews);
+      placeMark.properties.set('balloonHeader', reviewObject.address);
+      updateIcon(placeMark, reviewObject);
       return placeMark;
     }
 
@@ -159,11 +166,11 @@ document.addEventListener('DOMContentLoaded', () => {
       mark.properties.set({
         geoReview: prevRev
       });
-      updateIcon(mark, prevRev.placeReviews);
+      updateIcon(mark, prevRev);
     }
 
-    function updateIcon(place, reviews) {
-      const placeNames = new Set(reviews.map(obj => obj.reviewPlace));
+    function updateIcon(place, review) {
+      const placeNames = new Set(review.placeReviews.map(obj => obj.reviewPlace));
       if (placeNames.size > 1) {
         place.options.set({ 'preset': 'islands#blueIcon' });
         place.properties.set('iconContent', placeNames.size);
@@ -171,7 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
       else {
         place.options.set({ 'preset': 'islands#blueDotIcon' });
       }
-      place.properties.set({ 'balloonContentBody': Array.from(placeNames).join(', ') });
+      place.properties.set({ 'balloonContentBody': review.address });
+      // place.properties.set({ 'balloonContentBody': Array.from(placeNames).join(', ') });
     };
 
     function getFormatedDate(date) {
@@ -195,7 +203,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function saveToStorage(storage, key, data) {
       storage.setItem(key, JSON.stringify(data,
-        ['coord', 'placeReviews', 'rawDate', 'reviewFormatedDate', 'userName', 'reviewPlace', 'review']));
+        ['address', 'coord', 'placeReviews', 'rawDate', 'reviewFormatedDate', 'userName', 'reviewPlace', 'review']));
     };
+
   }
 });
